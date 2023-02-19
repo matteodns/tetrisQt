@@ -36,15 +36,24 @@ public:
     void drawSquare();
 
 
- public slots:
+public slots:
 
     void start();
 
+signals:
+
+    void levelChanged(int level);
+    void scoreChanged(int score);
 
 private:
 
     int gridWidth = 10;
     int gridHeight = 22;
+
+    int score;
+    int level;
+    int pieceDropped;
+    int linesRemoved;
 
     Forme grille[22][10];
     Piece *curPiece;

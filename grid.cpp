@@ -136,13 +136,19 @@ bool Grid::tryMoveDown()
 {
     if(!tryMove(posCurPiece[0],posCurPiece[1]+1))
     {
-        //changer score
-
         for (int i(0); i<4; i++){
             grille[curPiece->getPosY(i)+posCurPiece[1]][curPiece->getPosX(i)+posCurPiece[0]] = curPiece->getShape();
         }
 
+        pieceDropped+=1;
+
         removeLines();
+
+        if (pieceDropped%15==0) level+=1;
+        emit levelChanged(level);
+
+        timer.setInterval(1000-700*(level-1)/10);
+
         tryNewRandPiece();
 
         return false;
@@ -152,7 +158,12 @@ bool Grid::tryMoveDown()
 }
 
 void Grid::start()
-{   cout << "start" << endl;
+{
+    score = 0;
+    level = 1;
+    pieceDropped = 0;
+    linesRemoved = 0;
+
     timer.start(1000);
     tryNewRandPiece();
 }
@@ -238,12 +249,13 @@ void Grid::keyPressEvent(QKeyEvent *event)
 }
 
 void Grid::removeLines()
-{   cout << "removeLines" << endl;
-    for (int i(gridHeight-1); i>=0; i--){
+{
+    int nowRemoved(0);
+
+    for (int i(0); i<gridHeight; i++){
         bool lineFull(true);
         for (int j(0); j<gridWidth; j++)
         {
-            cout << i << ";" << j << ";" << grille[i][j] << endl;
             if (grille[i][j]==0){
                 lineFull=false;
                 break;
@@ -251,15 +263,29 @@ void Grid::removeLines()
         }
 
         if (lineFull)
-        {   cout << "line full" << endl;
+        {
 
             for (int k(i);k>0; k--){
                 for (int j(0); j<gridWidth; j++){
                     grille[k][j] = grille[k-1][j];
                 }
             }
+
+            nowRemoved+=1;
+            linesRemoved+=1;
         }
     }
+
+    int initScore(0);
+
+    if (nowRemoved==0) initScore = 0;
+    if (nowRemoved==1) initScore = 40;
+    if (nowRemoved==2) initScore = 100;
+    if (nowRemoved==3) initScore = 300;
+    if (nowRemoved==4) initScore = 1200;
+
+    score += initScore*level;
+    emit scoreChanged(score);
 
     update();
 }
