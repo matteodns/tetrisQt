@@ -5,7 +5,7 @@ using namespace std;
 
 
 Grid::Grid(QWidget *parent)
-    : QFrame(parent), isFinished(false), curPiece(new Piece)
+    : QFrame(parent), isFinished(false), curPiece(new Piece), nextPiece(new Piece)
 {
 
     setFrameStyle(QFrame::Panel | QFrame::Sunken);
@@ -38,12 +38,10 @@ int Grid::squareHeight()
     return contentsRect().height()/gridHeight;
 }
 
-// Creates a new random piece for the grid
-bool Grid::tryNewRandPiece()
+// Try the next piece, end of the game if it is not possible
+bool Grid::tryNewPiece()
 {
-
-    Forme newShape(Forme(rand()%7+1));
-    Piece *newPiece = new Piece(newShape);
+    Piece *newPiece = nextPiece;
 
     posCurPiece[0] = gridWidth/2-1;
     posCurPiece[1] = 0;  //à modifier si nouvelles piece (avec un ymin != 0)
@@ -83,6 +81,11 @@ bool Grid::tryNewRandPiece()
     }
 
     curPiece=newPiece;
+
+    Forme newShape(Forme(rand()%7+1));
+    *nextPiece = Piece(newShape);
+
+
 
     update();
 
@@ -176,7 +179,7 @@ bool Grid::tryMoveDown()
         timer.setInterval(1000-700*(level-1)/10);
 
         // Gives a new random piece
-        tryNewRandPiece();
+        tryNewPiece();
 
         // indicates that the piece coud not be moved down
         return false;
@@ -198,8 +201,11 @@ void Grid::start()
     // Start the timer
     timer.start(1000);
 
-    // Try to generate a new random piece
-    tryNewRandPiece();
+    Forme firstShape(Forme(rand()%7+1));
+    *nextPiece = Piece(firstShape);
+    tryNewPiece();
+
+
 }
 
 void Grid::paintEvent(QPaintEvent *event)
@@ -215,7 +221,7 @@ void Grid::paintEvent(QPaintEvent *event)
     painter.setPen(pen);
 
     if(isFinished){
-        QMessageBox::information(this,"Fin de la partie", "Partie Finie");
+        QMessageBox::information(this,"Fin de la partie", "Partie Finie.\n\nScore final : "+QString::number(score)+"\n\nNiveau final : "+QString::number(level));
         return;
     }
 
@@ -233,7 +239,6 @@ void Grid::paintEvent(QPaintEvent *event)
                 painter.drawRect(square);
                 painter.fillRect(square, tableColor[shape]);
             }
-
         }
     }
 

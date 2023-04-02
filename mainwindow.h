@@ -32,10 +32,16 @@ private:
     //  A pointer to an instance of the QPushButton class.
     QPushButton *startButton;
 
+    //  A pointer to an instance of the QPushButton class.
+    QPushButton *quitButton;
+
     // A pointer to an instance of the QLCDNumber class.
     QLCDNumber *levelLCD;
 
     // A pointer to an instance of the QLCDNumber class.
     QLCDNumber *scoreLCD;
+
+    // A pointer to an instance of the QLabel class.
+    QLabel *nextPieceLabel;
 };
 #endif // MAINWINDOW_H

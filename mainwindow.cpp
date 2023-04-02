@@ -14,13 +14,25 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Disable focus on this button
     startButton->setFocusPolicy(Qt::NoFocus);
+
+    // Create a new QPushButton with text "Quit"
+    quitButton = new QPushButton(tr("&Quit"));
+
+    // Disable focus on this button
+    quitButton->setFocusPolicy(Qt::NoFocus);
     
     // Create two LCDNumber objects for level and score
     levelLCD = new QLCDNumber(3);
     scoreLCD = new QLCDNumber(5);
+
+    //Create a frame to display the next piece
+    nextPieceLabel = new QLabel;
     
     // Connect startButton's clicked signal to Grid's start slot
     connect(startButton, &QPushButton::clicked, grille, &Grid::start);
+
+    // Connect quitButton's clicked signal to MainWindow's quit function
+    connect(quitButton, &QPushButton::clicked, this, &exit);
 
     // Connect Grid's levelChanged signal to levelLCD's display slot
     connect(grille, &Grid::levelChanged, levelLCD, qOverload<int>(&QLCDNumber::display));
@@ -45,6 +57,15 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Add startButton to the layout
     layout->addWidget(startButton, 5, 2);
+
+    // Add quitButton to the layout
+    layout->addWidget(quitButton, 4, 2);
+
+    // Create label for "Next" and add it to the layout
+    layout->addWidget(createLabel(tr("Next")), 0, 2);
+
+    // Add nextPieceFrame to the layout
+    layout->addWidget(nextPieceLabel, 1, 2, 2, 1);
 
     // Set the layout of the MainWindow
     setLayout(layout);

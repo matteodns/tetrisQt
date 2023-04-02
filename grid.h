@@ -29,8 +29,8 @@ public:
     // Returns the height of a single square in the grid
     int squareHeight();
 
-    // Tries to create a new random piece in the grid
-    bool tryNewRandPiece();
+    // Try the next piece, end of the game if it is not possible
+    bool tryNewPiece();
 
     // Tries to rotate the given piece
     bool tryRotate(Piece *newPiece);
@@ -88,6 +88,9 @@ private:
 
     // A pointer to the current piece
     Piece *curPiece;
+
+    // A pointer to the next piece
+    Piece *nextPiece;
 
     // An array containing the x and y coordinates of the current piece
     int posCurPiece[2];
