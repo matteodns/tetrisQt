@@ -50,10 +50,6 @@ public:
     // Overrides the key press event of the QFrame class
     void keyPressEvent(QKeyEvent *event) override;
 
-    // Draws a single square in the grid
-    void drawSquare();
-
-
 public slots:
 
     // Starts the game

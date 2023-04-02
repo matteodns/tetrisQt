@@ -4,7 +4,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QWidget(parent), grille(new Grid)
 {
     setWindowTitle(tr("Tetris"));
-    resize(854,480);
+    resize(854,465);
 
     // Create a new QGridLayout
     layout = new QGridLayout;

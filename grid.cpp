@@ -202,14 +202,6 @@ void Grid::start()
     tryNewRandPiece();
 }
 
-
-/* void Grid::cleanBoard()
-{
-
-
-
-} */
-
 void Grid::paintEvent(QPaintEvent *event)
 {
     QColor tableColor[8] = {0xffffff, 0x00ffff, 0xffff00, 0xaa00ff, 0xffa500, 0x0000ff, 0xff0000, 0x00ff00};
@@ -217,6 +209,10 @@ void Grid::paintEvent(QPaintEvent *event)
     QWidget::paintEvent(event);
     QPainter painter(this);
     QRect rect = contentsRect();
+
+    QPen pen;
+    pen.setWidth(2);
+    painter.setPen(pen);
 
     if(isFinished){
         QMessageBox::information(this,"Fin de la partie", "Partie Finie");
