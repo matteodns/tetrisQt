@@ -11,7 +11,7 @@ Pour lancer ce projet, vous devez avoir installé QtCreator sur votre machine Wi
 1. Téléchargez le code source du projet présent dans ce répertoire.
 2. Ouvrez QtCreator et sélectionnez "Open Project".
 3. Dans la fenêtre de sélection de projet, naviguez jusqu'au dossier contenant le code source de Tetris et sélectionnez le fichier CMakeLists.txt.
-4. Une fois le projet chargé, ouvrez le fichier CMakeLists.txt et modifiez la ligne set(QT_PREFIX_PATH ...) pour qu'elle pointe vers votre installation de la bibliothèque Qt.
+4. Une fois le projet chargé, ouvrez le fichier CMakeLists.txt et modifiez la ligne set(CMAKE_PREFIX_PATH ...) pour qu'elle pointe vers votre installation de la bibliothèque Qt.
 5. Appuyez sur Ctrl+R ou cliquez sur le bouton "Run" pour lancer le jeu.
 
 ## Utilisation
