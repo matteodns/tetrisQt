@@ -9,6 +9,7 @@
 #include <QLCDNumber>
 
 #include "grid.h"
+#include "nextPieceLabel.h"
 
 // The class MainWindow is a subclass of the QWidget class. It contains the following members:
 class MainWindow : public QWidget
@@ -42,6 +43,6 @@ private:
     QLCDNumber *scoreLCD;
 
     // A pointer to an instance of the QLabel class.
-    QLabel *nextPieceLabel;
+    nextPieceLabel *nextPiece;
 };
 #endif // MAINWINDOW_H

@@ -24,6 +24,7 @@ Grid::Grid(QWidget *parent)
 Grid::~Grid()
 {
     delete curPiece;
+    delete nextPiece;
 }
 
 // Returns the width of each square in the grid
@@ -58,7 +59,7 @@ bool Grid::tryNewPiece()
         
         // Check if the block is overlapping with an existing block
         if (grille[yPiece][xPiece] != noShape){
-        
+
             // Delete the new piece if it is overlapping
             delete newPiece;
         
@@ -80,14 +81,16 @@ bool Grid::tryNewPiece()
 
     }
 
-    curPiece=newPiece;
+    *curPiece=*newPiece;
 
     Forme newShape(Forme(rand()%7+1));
     *nextPiece = Piece(newShape);
 
-
-
     update();
+
+    std::cout << "NEXTPIECE = " << nextPiece->getShape() <<"\nCURPIECE = " << curPiece->getShape() << std::endl;
+
+    emit nextPieceChanged(nextPiece);
 
     return true;
 
@@ -203,8 +206,10 @@ void Grid::start()
 
     Forme firstShape(Forme(rand()%7+1));
     *nextPiece = Piece(firstShape);
+
     tryNewPiece();
 
+    emit nextPieceChanged(nextPiece);
 
 }
 
@@ -345,28 +350,3 @@ void Grid::removeLines()
     // Update the grid
     update();
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -25,8 +25,7 @@ MainWindow::MainWindow(QWidget *parent)
     levelLCD = new QLCDNumber(3);
     scoreLCD = new QLCDNumber(5);
 
-    //Create a frame to display the next piece
-    nextPieceLabel = new QLabel;
+    nextPiece = new nextPieceLabel(this);
     
     // Connect startButton's clicked signal to Grid's start slot
     connect(startButton, &QPushButton::clicked, grille, &Grid::start);
@@ -39,6 +38,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Connect Grid's scoreChanged signal to scoreLCD's display slot
     connect(grille, &Grid::scoreChanged, scoreLCD, qOverload<int>(&QLCDNumber::display));
+
+
+    connect(grille, &Grid::nextPieceChanged, nextPiece,&nextPieceLabel::newNextPiece);
 
     // Create label for "Level" and add it to the layout
     layout->addWidget(createLabel(tr("Level")), 0, 0);
@@ -65,7 +67,7 @@ MainWindow::MainWindow(QWidget *parent)
     layout->addWidget(createLabel(tr("Next")), 0, 2);
 
     // Add nextPieceFrame to the layout
-    layout->addWidget(nextPieceLabel, 1, 2, 2, 1);
+    layout->addWidget(nextPiece, 1, 2, 2, 1);
 
     // Set the layout of the MainWindow
     setLayout(layout);

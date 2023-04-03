@@ -22,8 +22,8 @@ set(PROJECT_SOURCES
         piece.cpp
         grid.h
         grid.cpp
-        #nextpiecelabel.h
-        #nextpiecelabel.cpp
+        nextpiecelabel.h
+        nextpiecelabel.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

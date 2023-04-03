@@ -63,6 +63,8 @@ signals:
     // Emitted when the score changes
     void scoreChanged(int score);
 
+    void nextPieceChanged(Piece* nextPiece);
+
 private:
 
     // The width of the grid
